@@ -23,7 +23,7 @@ api_key = os.environ["OPENAI_API_KEY"]
 url = "https://api.openai.com/v1/engines/text-davinci-002/completions"
 
 # Function to send a request to the ChatGPT API
-def chatgpt_request(prompt):
+def send_request(prompt):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}",
@@ -46,23 +46,31 @@ def chatgpt_request(prompt):
         return "Error: Unable to process your request."
 
 # Function to handle user input and display response from ChatGPT
-def chatgpt_interaction(event):
+def send_prompt(event=None):
     prompt = user_input.value
-    response = chatgpt_request(prompt)
+    response = send_request(prompt)
     response_area.value = f"> {prompt}\n{response}"
+
+    conversation_history.value += f"USER: {user_input.value}\nChatGPT: {response}\n{'-' * 10}"
+
+
     user_input.value = ""
 
 # Panel UI components
 title = pn.pane.Markdown("# ChatGPT Panel Application")
-user_input = pn.widgets.TextInput(name="Your message")
+title = pn.pane.Markdown("### Conversation History")
+user_input = pn.widgets.TextInput(name="Type message here...")
 send_button = pn.widgets.Button(name="Send", button_type="primary")
-send_button.on_click(chatgpt_interaction)
+
 response_area = pn.widgets.TextAreaInput(value="", disabled=True, height=500, css_classes=["text-area-scrollbar"])
+conversation_history = pn.widgets.TextAreaInput(value="", disabled=True, height=300, css_classes=["text-area-scrollbar"])
+
+send_button.on_click(send_prompt)
 
 # Arrange components and create the panel application
 layout = pn.Column(
     title,
-    response_area,
+    pn.Row(response_area, conversation_history),
     pn.Row(user_input, send_button, width=600),
 )
 
