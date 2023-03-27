@@ -2,10 +2,10 @@ import panel as pn
 import requests
 
 # Replace with your OpenAI API key
-api_key = "your_api_key_here"
+api_key = ""
 
 # Set up the ChatGPT API endpoint
-url = "https://api.openai.com/v1/engines/davinci-codex/completions"
+url = "https://api.openai.com/v1/engines/text-davinci-002/completions"
 
 # Function to send a request to the ChatGPT API
 def chatgpt_request(prompt):
@@ -26,6 +26,7 @@ def chatgpt_request(prompt):
     response_json = response.json()
 
     if response.status_code == 200:
+        print(response)
         return response_json["choices"][0]["text"].strip()
     else:
         return "Error: Unable to process your request."
