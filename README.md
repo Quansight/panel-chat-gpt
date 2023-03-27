@@ -42,16 +42,24 @@ bash
 ```bash
 conda activate panelchat
 ```
-
 ### 3\. Set your OpenAI API key
 
-Open the `app.py` file in your favorite text editor and replace `your_api_key_here` with your actual OpenAI API key:
+Create a new file named `.env` in the project directory:
 
-python
+bash
 
-```python
-api_key = "your_api_key_here"
+```bash
+touch .env
 ```
+
+Add your OpenAI API key to the `.env` file:
+
+```
+OPENAI_API_KEY=your_api_key_here
+```
+
+Replace `your_api_key_here` with your actual OpenAI API key. The application will read the API key from the environment variable stored in the `.env` file.
+
 
 ### 4\. Run the application
 
@@ -60,10 +68,10 @@ Start the Panel server and launch the application:
 bash
 
 ```bash
-panel serve app.py
+panel serve src/app.py
 ```
 
-The application will open in your default web browser at `http://localhost:5006/chatgpt_panel`.
+The application will open in your default web browser at `http://localhost:5006/app`.
 
 Usage
 -----
