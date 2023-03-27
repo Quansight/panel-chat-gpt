@@ -14,6 +14,8 @@ css = """
 
 pn.extension(raw_css=[css])
 
+load_dotenv()
+
 # Replace with your OpenAI API key
 api_key = os.environ["OPENAI_API_KEY"]
 
